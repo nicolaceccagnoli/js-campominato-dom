@@ -19,6 +19,9 @@
 
     5) In seguito l'utente clicca su una cella: se il numero è presente nella lista dei numeri generati - abbiamo calpestato una bomba - la cella si colora di rosso e la partita termina.
         -- Altrimenti la cella cliccata si colora di azzurro e l'utente può continuare a cliccare sulle altre celle.
+
+    6) La partita termina quando il giocatore clicca su una bomba o quando raggiunge il numero massimo possibile di numeri consentiti 
+        -- ovvero quando ha rivelato tutte le celle che non sono bombe.
 */
 
 // Definisco in una Variabile il bottone per giocare
@@ -31,6 +34,9 @@ console.log('containerGrid', containerGrid, typeof containerGrid);
 
 // Creo una Flag per l'interruttore
 let play = true;
+
+// Creo un contatore per il punteggio
+let counter = 0;
 
 // Creo l'evento per cui le celle si generano al click del Bottone
 myButton.addEventListener('click', function(){
@@ -84,7 +90,7 @@ function cellGenerator (div, level, array) {
     
             cell.classList.add('hard');
     
-        }
+        } 
 
         // Aggiungo alle mine una classe identificativa
         if (array.includes(i)) {
@@ -93,32 +99,34 @@ function cellGenerator (div, level, array) {
         } 
 
 
+        // Creo un evento click che gestisce la Flag dell'interruttore
         cell.addEventListener('click', function(){
-
             if (play === false) {
 
                 alert('gioco stoppato');
 
                 return;
             }
-
+            // Creo delle condizioni per cui in base al valore della Flag le celle cambiano colore
             if (this.classList.contains('mine')) {
+
                 play = false;
                 this.classList.add('mine-active');
                 alert ('hai perso');
+
             } else {
                 this.classList.add('active');
+                counter++;
+                console.log(i);
+                console.log('punteggio', counter);
+            }
+
+            if (counter == (level - array.length)) {
+                alert('Hai vinto');
             }
 
         })
-    
-
-
-        
-
-
     } 
-    
 }
 
 // Creo una funzione che mi generi casualmente i 16 numeri delle bombe
@@ -130,26 +138,27 @@ function generateRandomNumber(min, max) {
 
 // Creo la funzione che crea le Bombe
 function mineGenerator (array, level){
-        // Creo un ciclo che generi 16 numeri casuali per le bombe
-        for (let j=0; j < 15; j++){
+    // Creo un ciclo che generi 16 numeri casuali per le bombe
+    for (let j=0; j < 16; j++){
 
-            let minesNumber = generateRandomNumber(1, level);
-            console.log('minesNumber', minesNumber, typeof minesNumber);
-        
-            // Controllo che i numeri generati non siano presenti più volte nell'array
-            let mineFoundInArray = array.includes(minesNumber);
-            console.log(mineFoundInArray);
-        
-                // Creo un ciclo che controlli 
-                while (mineFoundInArray == true) {
-                    minesNumber = generateRandomNumber(1, level);
-        
-                    mineFoundInArray = array.includes(minesNumber);
-        
-                }
+        let minesNumber = generateRandomNumber(1, level);
+        console.log('minesNumber', minesNumber, typeof minesNumber);
+    
+        // Controllo che i numeri generati non siano presenti più volte nell'array
+        let mineFoundInArray = array.includes(minesNumber);
+        console.log(mineFoundInArray);
+    
+            // Creo un ciclo che controlli 
+            while (mineFoundInArray == true) {
+                minesNumber = generateRandomNumber(1, level);
+    
+                mineFoundInArray = array.includes(minesNumber);
+    
+            }
 
         // Pusho le Bombe dentro l'Array
         array.push(minesNumber);
     }
 
 }
+

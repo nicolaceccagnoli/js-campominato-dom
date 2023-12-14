@@ -44,6 +44,7 @@ header {
     height: calc(100%- 120px);
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .cell {
@@ -83,3 +84,9 @@ footer {
 .cell.mine-active {
     background-color: red;
 }
+
+/* #result {
+    width: 200px;
+    height: 200px;
+    background-color: blue;
+} */
