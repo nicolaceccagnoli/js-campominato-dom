@@ -114,16 +114,17 @@ function cellGenerator (div, level, array) {
                 this.classList.add('mine-active');
                 alert ('hai perso');
 
-            } else {
+            } else if (!(cell.classList.contains('active'))){
                 this.classList.add('active');
                 counter++;
                 console.log(i);
                 console.log('punteggio', counter);
             }
 
-            if (counter == (level - array.length)) {
+            // Stabilisco la condizione per cui il gioco si interrompe
+            if ((counter == (level - array.length)) ) {
                 alert('Hai vinto');
-            }
+            } 
 
         })
     } 
