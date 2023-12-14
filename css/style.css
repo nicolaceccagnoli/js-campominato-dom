@@ -1,0 +1,33 @@
+/*  
+   LINK AI CSS
+*/
+/* @import url(media.css); */
+/* @import url(12bool.css); */
+@import url(useful.css);
+
+/* 
+    RESET
+*/
+
+/* *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+} */
+
+/* 
+    CONTAINER
+*/
+.container {
+    max-width: 1170px;
+    margin: 0 auto;
+}
+
+/* 
+    GENERAL
+*/
+
+html{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
