@@ -29,10 +29,6 @@ console.log('containerGrid', containerGrid, typeof containerGrid);
 // Creo una Flag per l'interruttore
 let play = false;
 
-// Creo un Array che dovrà contenere i numeri casuali delle 16 bombe
-let bombArray = [];
-    
-
 // Creo l'evento per cui le celle si generano al click del Bottone
 myButton.addEventListener('click', function(){
 
@@ -43,41 +39,21 @@ myButton.addEventListener('click', function(){
     let difficultLevel = parseInt(document.getElementById('difficult-level').value);
     console.log('difficultLevel', difficultLevel, typeof difficultLevel);
 
-    // Creo un ciclo che generi 16 numeri casuali per le bombe
-    for (let i=0; i < 16; i++){
-
-    let bombNumbers = generateRandomNumber(1, difficultLevel);
-    console.log('bombNumbers', bombNumbers, typeof bombNumbers);
-
-    // Controllo che i numeri generati non siano presenti più volte nell'array
-    let bombFoundinArray = bombArray.includes(bombNumbers);
-    console.log(bombFoundinArray);
-
-    // Creo un ciclo che controlli 
-    while (bombFoundinArray == true) {
-        bombNumbers = generateRandomNumber(1, difficultLevel);
-
-        bombFoundinArray = bombArray.includes(bombNumbers);
-
-    }
-
-    // Pusho le Bombe dentro l'Array
-    bombArray.push(bombNumbers);
-
+    // Creo un Array che dovrà contenere i numeri casuali delle 16 bombe
+    let bombArray = [];
     
-}
-
-console.log(bombArray);
-
+    // Utilizzo la funzione per generare le Bombe usando come argomenti le mie Variabili
+    mineGenerator(bombArray, difficultLevel);
+    console.log(bombArray);
 
     // Utilizzo la funzione per generare le cell usando come argomenti le mie Variabili
-    cellGenerator (containerGrid, difficultLevel);
- 
+    cellGenerator (containerGrid, difficultLevel, bombArray); 
+
 })
 
 
 // Creo la funzione che generi il contenitore
-function cellGenerator (div, level) {
+function cellGenerator (div, level, array) {
     // Creo un Ciclo per cui vengono generate 100 celle
     for(let i = 1; i <= level; i++){
         // Definisco una Variabile con la quale creo la Cella da inserire nel Container
@@ -105,22 +81,55 @@ function cellGenerator (div, level) {
     
             cell.classList.add('hard');
     
-        } 
+        }
     
+        // Aggiungo l'evento click alle celle per cui viene cambiato lo sfondo 
+        if (array.includes(i)) {
+            cell.addEventListener('click', function(){
+                cell.classList.add('mine');
+                console.log(i);
+            })
+        } 
 
-        // Aggiungo l'evento click alle celle per cui viene cambiato lo sfondo
         cell.addEventListener('click', function(){
             this.classList.add('active');
             console.log(i);
         })
-    }  
+
+
+    } 
     
 }
-
 
 // Creo una funzione che mi generi casualmente i 16 numeri delle bombe
 function generateRandomNumber(min, max) {
     const randNum = Math.floor(Math.random() * (max - min + 1)) + min;
     
     return randNum;
+}
+
+// Creo la funzione che crea le Bombe
+function mineGenerator (array, level){
+        // Creo un ciclo che generi 16 numeri casuali per le bombe
+        for (let j=0; j < 15; j++){
+
+            let minesNumber = generateRandomNumber(1, level);
+            console.log('minesNumber', minesNumber, typeof minesNumber);
+        
+            // Controllo che i numeri generati non siano presenti più volte nell'array
+            let mineFoundInArray = array.includes(minesNumber);
+            console.log(mineFoundInArray);
+        
+                // Creo un ciclo che controlli 
+                while (mineFoundInArray == true) {
+                    minesNumber = generateRandomNumber(1, level);
+        
+                    mineFoundInArray = array.includes(minesNumber);
+        
+                }
+
+        // Pusho le Bombe dentro l'Array
+        array.push(minesNumber);
+    }
+
 }

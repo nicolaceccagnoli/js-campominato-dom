@@ -75,3 +75,7 @@ footer {
 .hard{
     width: calc(100% / 7);
 }
+
+.cell.mine {
+    background-color: red;
+}
