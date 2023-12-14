@@ -3,7 +3,7 @@
 */
 /* @import url(media.css); */
 /* @import url(12bool.css); */
-@import url(useful.css);
+/* @import url(useful.css); */
 
 /* 
     RESET
@@ -31,3 +31,47 @@ html{
     font-family: Arial, Helvetica, sans-serif;
 }
 
+main{
+    height: 100vh;
+}
+
+header {
+    height: 60px;
+    line-height: 60px;
+}
+
+.container-grid {
+    height: calc(100%- 120px);
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cell {
+    height: 50px;
+    background-color: gold;
+    border: 1px solid black;
+    text-align: center;
+    line-height: 50px;
+}
+
+.cell.active{
+    background-color: rgb(0, 0, 255);
+    color: white;
+    border: 1px solid white;
+}
+
+footer {
+    height: 60px;
+}
+
+.easy{
+    width:10%;
+}
+
+.medium{
+    width: calc(100% / 9);
+}
+
+.hard{
+    width: calc(100% / 7);
+}
