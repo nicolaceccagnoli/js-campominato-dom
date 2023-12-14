@@ -15,7 +15,10 @@
         - Difficoltà 3 ==> 49 Celle. 
 
     4) Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe. 
-       -- Attenzione: nella stessa cella può essere posizionata al massimo una bomba, perciò nell'array delle bombe non potranno esserci due numeri uguali.
+        -- Attenzione: nella stessa cella può essere posizionata al massimo una bomba, perciò nell'array delle bombe non potranno esserci due numeri uguali.
+
+    5) In seguito l'utente clicca su una cella: se il numero è presente nella lista dei numeri generati - abbiamo calpestato una bomba - la cella si colora di rosso e la partita termina.
+        -- Altrimenti la cella cliccata si colora di azzurro e l'utente può continuare a cliccare sulle altre celle.
 */
 
 // Definisco in una Variabile il bottone per giocare
@@ -27,7 +30,7 @@ const containerGrid = document.querySelector('.container-grid');
 console.log('containerGrid', containerGrid, typeof containerGrid);
 
 // Creo una Flag per l'interruttore
-let play = false;
+let play = true;
 
 // Creo l'evento per cui le celle si generano al click del Bottone
 myButton.addEventListener('click', function(){
@@ -82,19 +85,36 @@ function cellGenerator (div, level, array) {
             cell.classList.add('hard');
     
         }
-    
-        // Aggiungo l'evento click alle celle per cui viene cambiato lo sfondo 
+
+        // Aggiungo alle mine una classe identificativa
         if (array.includes(i)) {
-            cell.addEventListener('click', function(){
-                cell.classList.add('mine');
-                console.log(i);
-            })
+            cell.classList.add('mine');
+            console.log(i);
         } 
 
+
         cell.addEventListener('click', function(){
-            this.classList.add('active');
-            console.log(i);
+
+            if (play === false) {
+
+                alert('gioco stoppato');
+
+                return;
+            }
+
+            if (this.classList.contains('mine')) {
+                play = false;
+                this.classList.add('mine-active');
+                alert ('hai perso');
+            } else {
+                this.classList.add('active');
+            }
+
         })
+    
+
+
+        
 
 
     } 

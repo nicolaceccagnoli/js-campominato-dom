@@ -77,5 +77,9 @@ footer {
 }
 
 .cell.mine {
+    background-color: gold;
+}
+
+.cell.mine-active {
     background-color: red;
 }
