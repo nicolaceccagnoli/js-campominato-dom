@@ -112,7 +112,15 @@ function cellGenerator (div, level, array) {
 
                 play = false;
                 this.classList.add('mine-active');
-                alert ('hai perso');
+                setTimeout(() => {containerGrid.innerHTML=`
+                <div class="card text-center mb-3" style="width: 18rem;">
+                    <div class="card-body bg-danger">
+                        <h5 class="card-title">
+                            Hai perso! Hai totalizzato: ${counter} Punti..
+                        </h5>
+                    </div>
+                </div>`;}, 2000);
+                // alert ('hai perso');
 
             } else if (!(cell.classList.contains('active'))){
                 this.classList.add('active');
@@ -123,7 +131,15 @@ function cellGenerator (div, level, array) {
 
             // Stabilisco la condizione per cui il gioco si interrompe
             if ((counter == (level - array.length)) ) {
-                alert('Hai vinto');
+                setTimeout(() => {containerGrid.innerHTML=`
+                <div class="card text-center mb-3" style="width: 18rem;">
+                    <div class="card-body bg-success">
+                        <h5 class="card-title">
+                            Hai Vinto! Il tuo punteggio è ${counter}
+                        </h5>
+                    </div>
+                </div>`;}, 2000);
+                // alert('Hai vinto');
             } 
 
         })
