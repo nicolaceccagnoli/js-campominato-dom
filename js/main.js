@@ -101,12 +101,21 @@ function cellGenerator (div, level, array) {
 
         // Creo un evento click che gestisce la Flag dell'interruttore
         cell.addEventListener('click', function(){
+            // Imposto la condizione per cui se il gioco è finito non posso più fare nulla e devo riavviare la pagina
             if (play === false) {
 
-                alert('gioco stoppato');
+                setTimeout(() => {containerGrid.innerHTML=`
+                <div class="card text-center mb-3" style="width: 18rem;">
+                    <div class="card-body bg-warning">
+                        <h5 class="card-title">
+                            Attento! Devi riavviare il gioco
+                        </h5>
+                    </div>
+                </div>`;}, 1000);
 
                 return;
             }
+
             // Creo delle condizioni per cui in base al valore della Flag le celle cambiano colore
             if (this.classList.contains('mine')) {
 
@@ -119,10 +128,10 @@ function cellGenerator (div, level, array) {
                             Hai perso! Hai totalizzato: ${counter} Punti..
                         </h5>
                     </div>
-                </div>`;}, 2000);
+                </div>`;}, 1000);
                 // alert ('hai perso');
 
-            } else if (!(cell.classList.contains('active'))){
+            } else if (!(this.classList.contains('active'))){
                 this.classList.add('active');
                 counter++;
                 console.log(i);
@@ -130,7 +139,7 @@ function cellGenerator (div, level, array) {
             }
 
             // Stabilisco la condizione per cui il gioco si interrompe
-            if ((counter == (level - array.length)) ) {
+            if (counter == (level - array.length) ) {
                 setTimeout(() => {containerGrid.innerHTML=`
                 <div class="card text-center mb-3" style="width: 18rem;">
                     <div class="card-body bg-success">
@@ -138,7 +147,7 @@ function cellGenerator (div, level, array) {
                             Hai Vinto! Il tuo punteggio è ${counter}
                         </h5>
                     </div>
-                </div>`;}, 2000);
+                </div>`;}, 1000);
                 // alert('Hai vinto');
             } 
 
@@ -158,14 +167,15 @@ function mineGenerator (array, level){
     // Creo un ciclo che generi 16 numeri casuali per le bombe
     for (let j=0; j < 16; j++){
 
+        // Creo una Variabile che rappresenti le Mine e ci "intrappolo" la funzione per generare i 16 numeri casuali
         let minesNumber = generateRandomNumber(1, level);
         console.log('minesNumber', minesNumber, typeof minesNumber);
     
-        // Controllo che i numeri generati non siano presenti più volte nell'array
+        // Creo una Variabile nella quale all'interno c'è il comando che controlla che i numeri generati non siano presenti più volte nell'array
         let mineFoundInArray = array.includes(minesNumber);
         console.log(mineFoundInArray);
     
-            // Creo un ciclo che controlli 
+            // Creo un ciclo che continui a generare numeri finché non siano tutti diversi
             while (mineFoundInArray == true) {
                 minesNumber = generateRandomNumber(1, level);
     
